@@ -9,6 +9,12 @@ class Cache {
                     reject(error);
                     return;
                 }
+
+                if (value == null) {
+                    resolve(null);
+                    return;
+                }
+                
                 resolve(JSON.parse(value));
             });
         });
