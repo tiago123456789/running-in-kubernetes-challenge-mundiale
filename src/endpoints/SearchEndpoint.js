@@ -1,21 +1,36 @@
 import Joi from "@hapi/joi";
 import Endpoint from "./Endpoint";
+import Cache from "../utils/Cache";
 
 class SearchEndpoint extends Endpoint {
 
-    constructor() {
+    constructor(mercadoLivreCrawlerService) {
         super();
+        this._mercadoLivreCrawlerService = mercadoLivreCrawlerService;
         this.searchProductsDataInMercadoLivre = this.searchProductsDataInMercadoLivre
             .bind(this);
     }
 
 
-    searchProductsDataInMercadoLivre(request, response, next) {
+    async searchProductsDataInMercadoLivre(request, response, next) {
         try {
             const searchDatas = request.body;
             this.isValid(searchDatas);
-            response.json(searchDatas);
+            const keyCache = `${searchDatas.search}_${searchDatas.limit}`;
+
+            let products;
+            //  await Cache.get(keyCache);
+
+            if (products == null) {
+                products = await this._mercadoLivreCrawlerService
+                    .getProductsData(searchDatas.search, searchDatas.limit);
+                // await Cache.set(keyCache, products);
+            }
+
+
+            response.json(products);
         } catch (error) {
+            console.log(error);
             next(error);
         }
     }

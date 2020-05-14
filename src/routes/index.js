@@ -1,7 +1,9 @@
 import SearchEndpoint from "../endpoints/SearchEndpoint";
 import HandlerException from "../middlewares/HandlerException";
+import MercadoLivreCrawlerService from "../services/MercadoLivreCrawlerService";
 
-const searchEndpoint = new SearchEndpoint();
+const mercadoLivreCrawlerService = new MercadoLivreCrawlerService();
+const searchEndpoint = new SearchEndpoint(mercadoLivreCrawlerService);
 
 export default (app) => {
 
