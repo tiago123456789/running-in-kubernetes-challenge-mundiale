@@ -33,6 +33,7 @@ class MercadoLivreCrawlerService {
                 store = store.replace(/\spor\s/, "");
                 store = store.trim();
                 products.push({ link, price, name, state, store });
+                console.log(`products_${index}`)
             }
             quantityItensCaptured++;
         });
@@ -68,16 +69,13 @@ class MercadoLivreCrawlerService {
     }
 
     async getProductsData(productName, registersLimit) {
-        // let productsInCache = await Cache.smembers(KEY_CACHE_PRODUCTS) || [];
-        // const isNotNecessarySearchProductsInMercadoLivre = (
-        //     productsInCache.length >= registersLimit
-        // );
+        const keyCache = `${productName}_${registersLimit}`;
 
-        // if (isNotNecessarySearchProductsInMercadoLivre) {
-        //     const positionInitalArray = 0;
-        //     return productsInCache.slice(positionInitalArray, registersLimit);
+        // let productsInCache = await Cache.get(KEY_CACHE_PRODUCTS);
+
+        // if (productsInCache) {
+        //     return productsInCache;
         // }
-      
            
         let products = [];
         for (let indice = 1; indice <= this._getQuantityPageNecessaryConsulte(registersLimit); indice++) {
@@ -91,17 +89,12 @@ class MercadoLivreCrawlerService {
                 htmlContent, registersLimit
             );
 
-            // await Cache.set(`${KEY_CACHE_PRODUCTS}_${indice}`, newProducts, TIME_EXPIRATION_CACHE);
             products = [...products, ...newProducts];
-            // products = [...products, ...productsInCache];
+            // await Cache.del(keyCache);
+            // await Cache.set(keyCache, products, TIME_EXPIRATION_CACHE);
         }
 
-        await Cache.set(KEY_CACHE_PRODUCTS + "_" , products, TIME_EXPIRATION_CACHE);
-        console.log(await Cache.get(KEY_CACHE_PRODUCTS))
-        // const isExistProductsCache = quantityProductsInCache > 0;
-        // if (isExistProductsCache) {
-        //     products = [...productsInCache, ...products];
-        // }
+        // console.log(await Cache.get(keyCache));
 
         return products;
     }

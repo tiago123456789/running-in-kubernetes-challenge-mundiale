@@ -2,29 +2,6 @@ import CacheClient from "../config/Cache";
 
 class Cache {
 
-    static sadd(key, values, timeExpiration) {
-        return new Promise((resolve, reject) => {
-            values = values.map(item => CacheClient.sadd(key, JSON.stringify(item)));
-            if (timeExpiration != null) {
-                CacheClient.expire(key, timeExpiration);
-            }
-
-            resolve();
-        });
-    }
-
-    static smembers(key) {
-        return new Promise((resolve, reject) => {
-            CacheClient.smembers(key, (error, values) => {
-                if (error) {
-                    reject(error);
-                    return;
-                }
-                resolve(values);
-            });
-        });
-    }
-
     static get(key) {
         return new Promise((resolve, reject) => {
             CacheClient.get(key, (error, value) => {
@@ -38,8 +15,22 @@ class Cache {
                     return;
                 }
 
-                resolve(value);
+                resolve(JSON.parse(value));
             });
+        });
+    }
+
+    static del(key) {
+        return new Promise((resolve, reject) => {
+            CacheClient.del(key, function(error) {
+                if (error) {
+                    if (error) {
+                        reject(error);
+                        return;
+                    }
+                    resolve();
+                }
+            })
         });
     }
 
@@ -47,7 +38,7 @@ class Cache {
         return new Promise((resolve, reject) => {
             CacheClient.set(key, JSON.stringify(values), (error) => {
                 if (error) {
-                    reject(values);
+                    reject(error);
                     return;
                 }
 
