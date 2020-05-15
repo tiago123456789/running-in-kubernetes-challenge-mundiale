@@ -16,17 +16,8 @@ class SearchEndpoint extends Endpoint {
         try {
             const searchDatas = request.body;
             this.isValid(searchDatas);
-            const keyCache = `${searchDatas.search}_${searchDatas.limit}`;
-
-            let products = await Cache.get(keyCache);
-
-            if (products == null) {
-                products = await this._mercadoLivreCrawlerService
-                    .getProductsData(searchDatas.search, searchDatas.limit);
-                await Cache.set(keyCache, products);
-            }
-
-
+            let products = await this._mercadoLivreCrawlerService
+                .getProductsData(searchDatas.search, searchDatas.limit);
             response.json(products);
         } catch (error) {
             console.log(error);
