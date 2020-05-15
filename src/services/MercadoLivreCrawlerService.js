@@ -96,7 +96,7 @@ class MercadoLivreCrawlerService {
             // products = [...products, ...productsInCache];
         }
 
-        await Cache.set(KEY_CACHE_PRODUCTS, products, TIME_EXPIRATION_CACHE);
+        await Cache.set(KEY_CACHE_PRODUCTS + "_" , products, TIME_EXPIRATION_CACHE);
         console.log(await Cache.get(KEY_CACHE_PRODUCTS))
         // const isExistProductsCache = quantityProductsInCache > 0;
         // if (isExistProductsCache) {
