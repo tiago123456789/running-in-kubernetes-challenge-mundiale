@@ -1,54 +1,82 @@
-import CacheClient from "../config/Cache";
+import cacheClient from "../config/Cache";
 
 class Cache {
 
-    static get(key) {
+    sadd(key, values, timeExpiration) {
+        values = values.map(value => JSON.stringify(value));
         return new Promise((resolve, reject) => {
-            CacheClient.get(key, (error, value) => {
+            cacheClient.sadd(key, values, async (error) => {
                 if (error) {
                     reject(error);
                     return;
                 }
 
-                if (value == null) {
+                await Cache.setExpirationTimeInKey(key, timeExpiration);
+                resolve(values);
+            });
+        });
+    }
+
+    smembers(key) {
+        return new Promise((resolve, reject) => {
+            cacheClient.smembers(key, (error, values) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+
+                if (values == null) {
                     resolve(null);
                     return;
                 }
 
-                resolve(JSON.parse(value));
+                values = values.map(value => JSON.parse(value));
+                resolve(values);
             });
         });
     }
 
-    static del(key) {
+    get(key) {
         return new Promise((resolve, reject) => {
-            CacheClient.del(key, function(error) {
+            cacheClient.get(key, (error, values) => {
                 if (error) {
-                    if (error) {
-                        reject(error);
-                        return;
-                    }
-                    resolve();
+                    reject(error);
+                    return;
                 }
-            })
+                resolve(values);
+            });
         });
     }
 
-    static set(key, values, timeExpiration = null) {
+    setExpirationTimeInKey(key, timeExpiration) {
         return new Promise((resolve, reject) => {
-            CacheClient.set(key, JSON.stringify(values), (error) => {
+            cacheClient.expire(key, timeExpiration, (error) => {
                 if (error) {
                     reject(error);
                     return;
                 }
 
-                if (timeExpiration != null) {
-                    CacheClient.set(key, timeExpiration);
-                }
                 resolve();
             });
         });
     }
+
+    set(key, values, timeExpiration = 10) {
+        return new Promise((resolve, reject) => {
+            cacheClient.set(key, values, async (error) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+
+                await this.setExpirationTimeInKey(key, timeExpiration);
+                resolve(values);
+            });
+        });
+    }
+
 }
 
-export default Cache;
+const cache = new Cache;
+
+export default cache;

@@ -17,10 +17,9 @@ class SearchEndpoint extends Endpoint {
             const searchDatas = request.body;
             this.isValid(searchDatas);
             let products = await this._mercadoLivreCrawlerService
-                .getProductsData(searchDatas.search, searchDatas.limit);
+                .findProductsByNameAndLimit(searchDatas.search, searchDatas.limit);
             response.json(products);
         } catch (error) {
-            console.log(error);
             next(error);
         }
     }
