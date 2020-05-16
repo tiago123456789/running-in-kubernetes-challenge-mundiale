@@ -19,10 +19,14 @@ class MercadoLivreCrawler extends Crawler {
 
         let products = [];
         for (let indice = 1; indice <= numberPagesNecessaryConsulte; indice++) {
-            const isLastPageConsulte = (indice == numberPagesNecessaryConsulte) && indice > 2;
+            const isLastPageConsulte = (indice == numberPagesNecessaryConsulte);
             let quantityItensReturn = this._ITENS_PER_PAGE;
             if (isLastPageConsulte) {
                 quantityItensReturn = quantityProducts - (numberPagesNecessaryConsulte - 1) * this._ITENS_PER_PAGE
+            }
+
+            if (isLastPageConsulte && indice == 1) {
+                quantityItensReturn = options.quantityItensReturn;
             }
 
             const htmlContent = await this._getHtmlContent({
