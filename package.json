@@ -7,8 +7,9 @@
     "start": "npm run build && pm2 ./build/index.js",
     "build": "babel ./src --out-dir ./build",
     "start:dev": "nodemon --exec babel-node --presets=env ./src/index.js",
-    "playredis": "nodemon --exec babel-node --presets=env ./src/playredis.js",
-    "test": "mocha --colors --require @babel/register --require ./tests/config.js ./tests/**/*.spec.js"
+    "test:unit": "mocha --exit --colors --require @babel/register --require ./tests/config.js ./tests/unit//**/*.spec.js",
+    "test:integration": "mocha --exit --colors --require @babel/register --require ./tests/config.js ./tests/integration/**/*.spec.js",
+    "test": "npm run test:unit && npm run test:integration"
   },
   "author": "Tiago R. data costa",
   "license": "ISC",
