@@ -11,7 +11,7 @@ class Cache {
                     return;
                 }
 
-                await Cache.setExpirationTimeInKey(key, timeExpiration);
+                await this.setExpirationTimeInKey(key, timeExpiration);
                 resolve(values);
             });
         });
