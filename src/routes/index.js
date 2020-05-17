@@ -23,7 +23,7 @@ export default (app) => {
      */
 
     /**
-     * @swagger
+     * @swagger 
      * /api/searchs:
      *   post:
      *     tags:
@@ -33,7 +33,7 @@ export default (app) => {
      *        required: true
      *        type: object
      *        schema:
-     *           $ref: "#/paths/definitions/SearchDatas"
+     *           $ref: "#/definitions/SearchDatas"
      *        in: body
      *     produces:
      *       - application/json
