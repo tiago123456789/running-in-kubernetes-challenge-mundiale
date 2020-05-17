@@ -8,5 +8,5 @@ app.listen(PORT, (error) => {
         return;
     }
 
-    console.log(`Server is running address: http://localhost:${PORT}`);
+    console.log(`Server is running address: ${process.env.APP_URL}`); 
 });

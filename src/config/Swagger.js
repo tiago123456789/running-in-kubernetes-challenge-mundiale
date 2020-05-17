@@ -10,7 +10,7 @@ const swaggerDefinition = {
 
 const swaggerSpec =  swaggerJsDoc({
     swaggerDefinition: swaggerDefinition,
-    apis: ['./src/routes/*.js'],
+    apis: [process.env.SWAGGER_PATH_ROUTES],
 });
 
 export default swaggerSpec;
