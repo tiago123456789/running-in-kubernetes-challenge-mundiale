@@ -1,6 +1,9 @@
+import logger from "../config/Logger";
 
 export default(error, request, response, next) => {
 
+    logger.error(`${error.name} caused by: ${error.message}`);
+    
     switch(error.name) {
         case "NotFoundException":
             return response.status(404).json({ statusCode: 404, message: error.message });

@@ -1,6 +1,4 @@
-import axios from "axios";
-import cheeiro from "cheerio";
-import Cache from "../utils/Cache";
+import logger from "../config/Logger";
 
 class MercadoLivreCrawlerService {
 
@@ -18,6 +16,7 @@ class MercadoLivreCrawlerService {
     
         if (isNotNecessary_extractProductsData) {
             const positionInitial = 0;
+            logger.info(`Get datas products with search ${name} and limit ${limit} in cache.`);
             return productsInCache.slice(positionInitial, limit);
         }
     
@@ -29,6 +28,7 @@ class MercadoLivreCrawlerService {
     
         const isNotEmptyProductsArray = products.length > 0;
         if (isNotEmptyProductsArray) {
+            logger.info(`Adding datas products with search ${name} and limit ${limit} in cache.`);
             await this._cacheClient.sadd(name, products, this._TIME_EXPIRETION_CACHE);
         }
     

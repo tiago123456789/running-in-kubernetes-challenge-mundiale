@@ -1,6 +1,7 @@
 import axios from "axios";
 import cheeiro from "cheerio";
 import Crawler from "./Crawler";
+import logger from "../config/Logger";
 import * as NumberUtil from "../utils/Number"
 import NotFoundException from "../exceptions/NotFoundException";
 
@@ -13,8 +14,8 @@ class MercadoLivreCrawler extends Crawler {
     }
 
     async getContent(options) {
+        logger.info(`Initialize process extraction datas in Mercado livre of ${options.productName} and quantity ${options.quantityItensReturn}`);
         const quantityProducts = options.quantityItensReturn;
-
         const numberPagesNecessaryConsulte = this._getQuantityPageNecessaryConsulte(quantityProducts);
 
         let products = [];
@@ -22,7 +23,7 @@ class MercadoLivreCrawler extends Crawler {
             const isLastPageConsulte = (indice == numberPagesNecessaryConsulte);
             let quantityItensReturn = this._ITENS_PER_PAGE;
             if (isLastPageConsulte) {
-                quantityItensReturn = quantityProducts - (numberPagesNecessaryConsulte - 1) * this._ITENS_PER_PAGE
+                quantityItensReturn = quantityProducts - (numberPagesNecessaryConsulte - 1) * this._ITENS_PER_PAGE;
             }
 
             if (isLastPageConsulte && indice == 1) {
@@ -38,6 +39,7 @@ class MercadoLivreCrawler extends Crawler {
             products = [...products, ...newProducts];
         }
 
+        logger.info(`Finishing process extraction datas in Mercado livre of ${options.productName} and quantity ${options.quantityItensReturn}`)
         return products;
     }
 
@@ -93,7 +95,7 @@ class MercadoLivreCrawler extends Crawler {
                 return;
             }
 
-            const link = $(element).find(".item__info-title").attr("href");
+            const link = $(element).find(".item__js-link").attr("href");
             const price = $(element).find(".price__fraction").text();
             const name = $(element).find(".main-title").text().trim();
             const state = $(element).find(".item__status .item__status").text();

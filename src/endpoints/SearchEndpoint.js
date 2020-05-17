@@ -1,6 +1,5 @@
 import Joi from "@hapi/joi";
 import Endpoint from "./Endpoint";
-import Cache from "../utils/Cache";
 
 class SearchEndpoint extends Endpoint {
 
