@@ -11,7 +11,40 @@ const searchEndpoint = new SearchEndpoint(mercadoLivreCrawlerService);
 
 export default (app) => {
 
-    app.post("/searchs", searchEndpoint.searchProductsDataInMercadoLivre);
+    /**
+     * @swagger
+     * definitions:
+     *  SearchDatas:
+     *     properties:
+     *        search:
+     *          type: string
+     *        limit:
+     *          type: integer
+     */
+
+    /**
+     * @swagger
+     * /api/searchs:
+     *   post:
+     *     tags:
+     *       - Search
+     *     parameters:
+     *      - name: body
+     *        required: true
+     *        type: object
+     *        schema:
+     *           $ref: "#/paths/definitions/SearchDatas"
+     *        in: body
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *          description: Return products success
+     *       400:
+     *          description: Return when datas request is invalid.
+     *  
+     */
+    app.post("/api/searchs", searchEndpoint.searchProductsDataInMercadoLivre);
 
     /**
      * @description Middleware to handler access routes not exist.
