@@ -6,7 +6,7 @@ Requisitos para configurar o projeto
 - Docker. Obs: versão usado foi 19.03.6
 - Docker compose. Obs: versão usado foi 1.18.0
 - Git
-- Executar git clone https://github.com/tiago123456789/CHANGELLE-MUNDIALE
+- Executar git clone git@github.com:tiago123456789/CHANGELLE-MUNDIALE.git
 - Accesar projeto é criar um diretório chamado **logs** na raiz do projeto
 - Criar um arquivo chamado **.env** baseado no arquivo **.env.example** é adicionar as informações necessárias.
 - Executar comando npm install dentro da raiz do projeto para instalar as dependências do projeto.
@@ -35,9 +35,8 @@ Instruções para fazer build do projeto para produção:
 ```
     ENV=prod
 ```
-- Executar o comando: **docker-compose up -d** para subir o container docker com o redis para fazer cache das informações.
-- Executar o comando: **npm run start:dev** para rodar o projeto.
-- Para fazer testar a funcionalidade acesse no navergador **/api/docs**  
+- Executar o comando: **npm run build** para fazer build do projeto para fazer com que o código do projeto seja transpilado é transformado em uma versão mais antiga para não ter problema por não suportar as novas funcionalidades do javascript.
+
 
 
 
