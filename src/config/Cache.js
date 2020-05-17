@@ -1,3 +1,10 @@
 import redis from "redis";
+import logger from "./Logger";
 
-export default redis.createClient();
+const client = redis.createClient();
+
+client.on("error", (error) => {
+    logger.error(`${error.name} caused by: ${error.message}`);
+});
+
+export default client;  
