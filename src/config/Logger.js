@@ -20,8 +20,8 @@ logger.stream = {
   }
 };
 
-const isProduction = process.env.ENV == "prod";
-if (!isProduction) {
+const isDevelopment = process.env.ENV == "dev";
+if (!isDevelopment) {
   logger.add(new winston.transports.Console({ level: 'debug' }));
 }
 

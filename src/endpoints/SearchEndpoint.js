@@ -6,12 +6,12 @@ class SearchEndpoint extends Endpoint {
     constructor(mercadoLivreCrawlerService) {
         super();
         this._mercadoLivreCrawlerService = mercadoLivreCrawlerService;
-        this.searchProductsDataInMercadoLivre = this.searchProductsDataInMercadoLivre
+        this.findProductsInMercadoLivreByNameAndLimit = this.findProductsInMercadoLivreByNameAndLimit
             .bind(this);
     }
 
 
-    async searchProductsDataInMercadoLivre(request, response, next) {
+    async findProductsInMercadoLivreByNameAndLimit(request, response, next) {
         try {
             const searchDatas = request.body;
             this.isValid(searchDatas);

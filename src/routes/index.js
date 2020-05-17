@@ -44,7 +44,7 @@ export default (app) => {
      *          description: Return when datas request is invalid.
      *  
      */
-    app.post("/api/searchs", searchEndpoint.searchProductsDataInMercadoLivre);
+    app.post("/api/searchs", searchEndpoint.findProductsInMercadoLivreByNameAndLimit);
 
     /**
      * @description Middleware to handler access routes not exist.
