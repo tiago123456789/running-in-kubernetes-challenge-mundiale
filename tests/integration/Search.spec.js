@@ -7,6 +7,7 @@ describe("Tests Integration of /searchs endpoint", () => {
     });
 
     it("Should return status code 200 to the try request with datas needed", function(done) {
+        this.timeout(100000);
         const bodyRequestFake = {
             search: "celular",
             limit: 1
@@ -15,6 +16,7 @@ describe("Tests Integration of /searchs endpoint", () => {
     });
 
     it("Should return quantity products equal parameter limit", function(done) {
+        this.timeout(100000);
         const bodyRequestFake = {
             search: "celular",
             limit: 1

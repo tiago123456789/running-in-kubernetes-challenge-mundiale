@@ -10,8 +10,7 @@ class MercadoLivreCrawlerService {
 
     async findProductsByNameAndLimit(name, limit) {
         const productsInCache = await this._cacheClient.smembers(name);
-        const isNotNecessaryExtractProductsData
- = (
+        const isNotNecessaryExtractProductsData = (
             productsInCache != null && productsInCache.length >= limit
         );
     

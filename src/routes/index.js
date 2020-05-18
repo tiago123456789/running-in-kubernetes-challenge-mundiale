@@ -42,6 +42,8 @@ export default (app) => {
      *          description: Return products success
      *       400:
      *          description: Return when datas request is invalid.
+     *       404:
+     *          description: When products not found.
      *  
      */
     app.post("/api/searchs", searchEndpoint.findProductsInMercadoLivreByNameAndLimit);
