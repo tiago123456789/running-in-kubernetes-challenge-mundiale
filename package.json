@@ -4,7 +4,7 @@
   "description": "Challenge mundiale implemented crawler",
   "main": "./src/index.js",
   "scripts": {
-    "start": "npm run build && pm2 ./build/index.js",
+    "start": "npm run build && node ./build/index.js",
     "build": "babel ./src --out-dir ./build",
     "start:dev": "nodemon --exec babel-node -- ./src/index.js",
     "test:unit": " NODE_ENV=testing mocha --exit --colors --require @babel/register --require ./tests/config.js ./tests/unit//**/*.spec.js",

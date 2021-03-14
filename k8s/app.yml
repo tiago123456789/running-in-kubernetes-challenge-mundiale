@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-configmap
+data:
+  redis-host: redis-service
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app-challenge-mundiale
+        image: tiagorosadacosta123456/challenge-mundiale:latest
+        ports:
+        - containerPort: 3000
+        env:
+
+        - name: ENV
+          value: production
+        - name: SWAGGER_PATH_ROUTES
+          value: ./build/routes/*.js
+        - name: PORT
+          value: "3000"
+        - name: REDIS_PORT
+          value: "6379"
+        - value: APP_URL
+          name: app-serve
+        - name:  REDIS_HOST
+          valueFrom:
+            configMapKeyRef: 
+              name: app-configmap
+              key: redis-host
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: app
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 30003

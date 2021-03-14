@@ -2,7 +2,24 @@ version: "3"
 
 services: 
 
-    redis:
+    app: 
+        image: tiagorosadacosta123456/challenge-mundiale:latest
+        container_name: app
+        env_file:
+            - .env
+        ports:
+            - "3000:3000"
+        networks:
+            - app-network
+
+
+    cache:
         image: redis
         ports:
             - 6379:6379
+        networks:
+            - app-network
+
+networks:
+  app-network:
+    driver: bridge
