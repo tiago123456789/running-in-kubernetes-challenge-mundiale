@@ -23,6 +23,8 @@ spec:
       labels:
         app: app
     spec:
+      imagePullSecrets:
+        - name: myregistrykey
       containers:
       - name: app-challenge-mundiale
         image: tiagorosadacosta123456/app-node-kubernetes
