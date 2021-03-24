@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: app-challenge-mundiale
-        image: tiagorosadacosta123456/challenge-mundiale:latest
+        image: tiagorosadacosta123456/app-node-kubernetes
         ports:
         - containerPort: 3000
         env:
