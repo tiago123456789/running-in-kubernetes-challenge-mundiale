@@ -23,11 +23,12 @@ spec:
       labels:
         app: app
     spec:
+      serviceAccountName: jenkins
+      imagePullSecrets:
+        - name: myregistrykey
       containers:
       - name: app-challenge-mundiale
         image: tiagorosadacosta123456/app-node-kubernetes
-      imagePullSecrets:
-        - name: myregistrykey
         ports:
         - containerPort: 3000
         env:
